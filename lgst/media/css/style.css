@@ -78,15 +78,14 @@ textarea:focus, input:focus {
 	width: 500px;
     max-height: 400px;
     overflow:auto;
-    padding: 0px 40px 5px 40px;
 	margin-left: -250px;
 	background: #fff;
+    padding: 0px 0px 0px 0px;
 	z-index: 1001;
 	display: none;
     font-family: 'Open Sans', sans-serif;
     font-weight: 800;
-    background-image:url('../img/fabric_of_squares_gray.png');
-    border: 10px solid #3d4049;
+    background-color: #fafafa;
 }
 
 #lightbox-shadow {
@@ -104,8 +103,36 @@ textarea:focus, input:focus {
 	display: none;
 }
 
-.results {
+div.results {
+    width: 500px;
+    background-color:#3d4049;
+    padding-top: 15px;
+    padding-bottom:15px;
+}
+
+p.results {
+    text-align: center;
     font-size: 30px;
     line-height:20px;
-    color: #3d4049;
+    color: #fafafa;
+}
+p.company-name {
+    padding-left: 40px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+div#light {
+    padding-bottom: 3px;
+    padding-top:3px;
+}
+div#dark {
+    background-color: #e8e8e8;
+    padding-top: 3px;
+    padding-bottom:3px;
+}
+
+a.company-link {
+    text-decoration:none;
+    color: black;
 }

@@ -54,17 +54,23 @@ function lightbox(insertContent, ajaxContentUrl, text){
                     for (var i = 0; i < response.length; i++) {
                         var name = response[i].name;
                         var type = response[i].type;
+                        var id = response[i].id;
                         if ((type === 'organization') && ($.inArray(name, arr) === -1)) {
-                            console.log(name);
-                            arr.push(name);
+                            upper = name.toUpperCase();
+                            var html = '<a href="#" class="company-link" id =' + response[i].id + '"><p class="company-name">' + upper + '</p></a>';
+                            arr.push(html);
                         }
                     }
                     $('#lightbox').empty();
-                    $('#lightbox').append('<p class="results">RESULTS:</p>');
-                    console.log(arr.length);
+                    $('#lightbox').append('<div class="results"><p class="results">RESULTS:</p></div>');
                     for (var j = 0; j < arr.length; j++) {
-					   $('#lightbox').append('<p class="company-name">' + arr[j].toUpperCase() + '</p>');
+                        if (j%2 == 0) {
+                            $('#lightbox').append('<div class="company-name" id="light">' + arr[j] + '</div>');
+                        } else {
+                            $('#lightbox').append('<div class="company-name" id="dark">' + arr[j] + '</div>');
+                        }
                     }
+                    
 				},
 				error:function(){
 					alert('AJAX Failure!');
@@ -97,6 +103,5 @@ function closeLightbox(){
 		$('#lightbox').empty();
 	
 	})(jQuery); // end jQuery wrapper
-	
 }
 });
