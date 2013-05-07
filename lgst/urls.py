@@ -9,6 +9,7 @@ from app import views
 urlpatterns = patterns('',
     (r'media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     url(r'^$', 'lgst.app.views.index', name='home'),
+    url(r'^organization/(?P<entityid>\w+)/?$', 'lgst.app.views.organization', name='organizations'),
     url(r'^_request_data', 'lgst.app.views.get_results', name='search')
     # Examples:
     # url(r'^$', 'lgst.views.home', name='home'),

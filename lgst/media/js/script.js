@@ -57,7 +57,7 @@ function lightbox(insertContent, ajaxContentUrl, text){
                         var id = response[i].id;
                         if ((type === 'organization') && ($.inArray(name, arr) === -1)) {
                             upper = name.toUpperCase();
-                            var html = '<a href="#" class="company-link" id =' + response[i].id + '"><p class="company-name">' + upper + '</p></a>';
+                            var html = '<a href="#" class="company-link" id ="' + response[i].id + '"><p class="company-name">' + upper + '</p></a>';
                             arr.push(html);
                         }
                     }
@@ -70,6 +70,12 @@ function lightbox(insertContent, ajaxContentUrl, text){
                             $('#lightbox').append('<div class="company-name" id="dark">' + arr[j] + '</div>');
                         }
                     }
+                    $(".company-link").on("click", function(event){
+                        event.preventDefault();
+                        var company_id = this.id;
+                        window.location = '/organization/' + company_id;
+                        return false;
+                    });
                     
 				},
 				error:function(){
