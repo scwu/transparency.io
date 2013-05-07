@@ -5,6 +5,13 @@ $(document).ready(function() {
         lightbox('', '/_request_data', text);
     });
     
+    $(document).keypress(function(e) {
+    if(e.which == 13) {
+        var text = $('#search-txt').val();
+        lightbox('', '/_request_data', text);
+    }
+    });
+    
 function lightbox(insertContent, ajaxContentUrl, text){
 
 	// jQuery wrapper (optional, for compatibility only)
@@ -53,10 +60,10 @@ function lightbox(insertContent, ajaxContentUrl, text){
                         }
                     }
                     $('#lightbox').empty();
-                    $('#lightbox').append('<p class="results">Results:</p>');
+                    $('#lightbox').append('<p class="results">RESULTS:</p>');
                     console.log(arr.length);
                     for (var j = 0; j < arr.length; j++) {
-					   $('#lightbox').append('<p class="company-name">' + arr[j] + '</p>');
+					   $('#lightbox').append('<p class="company-name">' + arr[j].toUpperCase() + '</p>');
                     }
 				},
 				error:function(){
