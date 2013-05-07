@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{{ block.super}}
+{% endblock styles %}
+
+{% block content %}
+<div class="home-page">
+  <div class="search-bar">
+    <img id="bar" src="/media/img/search.png"/>
+    <input type="text" id="search-txt" placeholder="search for a company"/>
+    <a href="#" id="enter-button"><img id="enter" src="/media/img/enter.png"/></a>
+    <img id="logo" src="/media/img/logo.png"/>
+  </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+{{ block.super}}
+  <script src="/media/js/script.js"></script>
+{% endblock scripts %}
