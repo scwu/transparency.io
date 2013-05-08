@@ -1,7 +1,6 @@
 $(document).ready(function() {
     $("#enter-button").click(function() {
         var text = $('#search-txt').val();
-        console.log(text);
         lightbox('', '/_request_data', text);
     });
     
@@ -69,6 +68,9 @@ function lightbox(insertContent, ajaxContentUrl, text){
                         } else {
                             $('#lightbox').append('<div class="company-name" id="dark">' + arr[j] + '</div>');
                         }
+                    }
+                    if (arr.length === 0) {
+                      $('#lightbox').append('<div class="company-name" id="light"><p class="company-name">I\'m sorry, but there are no results available for that company.</p></div>');
                     }
                     $(".company-link").on("click", function(event){
                         event.preventDefault();

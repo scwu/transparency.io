@@ -73,7 +73,6 @@ $(document).ready(function() {
     var recipients = {{ recipients }} ;
     var state_fed = {{ state_fed }} ;
     var party = {{ party_breakdown }} ;
-    console.log(recipients);
     var dems = parseInt(party.Democrats[0]);
     var other = parseInt(party.Other[0]);
     var repubs = parseInt(party.Republicans[0]);
@@ -84,7 +83,6 @@ $(document).ready(function() {
         var recip = recip;
         var place = place;
         var id = id;
-        console.log(recip);
         if (recip.party === "R") {
             if (recip.state === "") {
                 $(place).append('<div class="r ' + id + '" id="red"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: ' + recip.total_amount + '</p><p>Type of Contribution: Federal</p></div>');

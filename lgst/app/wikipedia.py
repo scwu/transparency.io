@@ -18,7 +18,6 @@ class Wikipedia:
    
     def __fetch(self, url):
         request = urllib2.Request(url)
-        print url
         request.add_header('User-Agent', 'Mozilla/5.0')
        
         try:

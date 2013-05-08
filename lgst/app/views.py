@@ -31,9 +31,7 @@ def get_results(request):
         response = urllib2.urlopen(req)
         json = response.read()
         if json == "[]":
-            print "reached here"
             query2 = re.sub(r'[^a-zA-Z0-9 ]', '', text)
-            print query2
             url2 = 'http://transparencydata.com/api/1.0/entities.json?'
             values2 = {
                 'apikey' : '639590fa6001413492a034112c3a6494',
@@ -56,27 +54,20 @@ def organization(request, entityid):
         name = done['name']
         try:
             bio = done['metadata']['bio']
-            print bio
             result = re.compile('<p>(.*)</p>', re.DOTALL ).search(bio)
             try:
                 bio = result.group(1)
             except:
-                print "no regex match"
                 pass
             photo = done['metadata']['photo_url']
         except:
             url_encode2 = re.sub(r'[^a-zA-Z0-9 ]', '', name)
-            print url_encode2
             final_str = ' '.join(url_encode2.split())
-            print final_str
             url_encode = final_str.replace(" ", "+")
-            print url_encode
             wiki_search = "http://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch=%s&srlimit=1" % (url_encode)
             results = urllib2.urlopen(wiki_search)
             results_dict = json.loads(results.read())
-            print results_dict
             title = results_dict['query']['search'][0]['title']
-            print title
             lang = 'en'
             wiki_p = Wikipedia(lang)
             try:
@@ -98,7 +89,6 @@ def organization(request, entityid):
                     try:
                         bio = content.split("==History==",1)[0]
                         result2 = re.compile('<p>(.*)<\/p>', re.DOTALL).search(bio)
-                        print result2
                         try:
                             bio = result2.group(1)
                         except:
@@ -118,5 +108,4 @@ def organization(request, entityid):
         url_state = 'http://transparencydata.com/api/1.0/aggregates/org/%s/recipients/level_breakdown.json?apikey=%s' % (entityid, apikey)
         response_state = urllib2.urlopen(url_state)
         state_breakdown = response_state.read()
-        print state_breakdown
         return render_to_response('organization.html', {'recipients' : SafeString(recipients), 'state_fed' : SafeString(state_breakdown), 'party_breakdown' : SafeString(breakdown), 'bio' : bio.strip(), 'name' : name.upper(), 'photo' : photo}) 
