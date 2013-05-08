@@ -8,10 +8,6 @@ Creating a search engine to find out exactly what companies support, how much in
 
 Implement basic searching and auto-completion with Influence Explorer's API - because the querying sucks, implement a view that reads a base CSV file and inserts all the corporations into a postgres database - then use Ajax and Django to autocomplete for you (possibly use some kind of stemming algorithm, but we'll see). 
 
-## Product Search
- 
-From there,  I hope to use Amazon's Product Advertising API to search for products and return the companies they were made by. Implement a similar search as in Step 1, with autocompletion. 
- 
 ## Data visualization
  
 Implement data visualization in an interesting interactive way. 
