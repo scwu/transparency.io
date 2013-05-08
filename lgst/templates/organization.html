@@ -75,6 +75,19 @@
     </div>
 </div>
 </div>
+<div class="lobbyist">
+    <div class="lobbyist-wrapper">
+        <div class="top-lobbyist">
+            <h2>TOP LOBBYING FIRMS HIRED BY {{ name }}</h2>
+            <canvas id="lobbyist_graph" height="450" width="600"></canvas>
+        </div>
+        <div class="lobbyist-issues">
+            <h2>TOP LOBBYING ISSUES FOR {{ name }}</h2>
+            <ol class="issue-list">
+            </ol>
+        </div>
+    </div>
+</div>
 {% endblock content %}
 
 {% block scripts %}
@@ -86,7 +99,8 @@ $(document).ready(function() {
     var state_fed = {{ state_fed }} ;
     var party = {{ party_breakdown }} ;
     var pac = {{ pac }};
-    console.log(pac);
+    var lobbyist = {{ lobbyist }};
+    var issues = {{ issues_breakdown }};
     var dems = parseInt(party.Democrats[0]);
     var other = parseInt(party.Other[0]);
     var repubs = parseInt(party.Republicans[0]);
@@ -162,6 +176,36 @@ $(document).ready(function() {
     for (var j=0; j < pac.length; j++) {
         $('.list2').append('<div class="p"><li>' + pac[j].name.toUpperCase() + '</li><p>Number of contributors: ' + pac[j].employee_count + '</p><p>Total amount contributed: $' + pac[j].total_amount + '</p></div>');
     }
+    
+    for (var l=0; l < issues.length; l++) {
+        $('.issue-list').append('<div class="i"><li>' + issues[l].issue.toUpperCase() + '</li></div>');
+    }
+    var lobbyist_labels = new Array();
+    var lobbyist_count = new Array();
+    var lobbyist_amount = new Array();
+    for (var k=0; k < lobbyist.length; k++) {
+        lobbyist_labels.push(lobbyist[k].registrant_name);
+        lobbyist_count.push(parseInt(lobbyist[k].count));
+        lobbyist_amount.push(parseInt(lobbyist[k].amount));
+    }
+    var LobbyistChartData = {
+			labels : lobbyist_labels,
+			datasets : [
+				{
+					fillColor : "rgba(220,220,220,0.5)",
+					strokeColor : "rgba(220,220,220,1)",
+					data : lobbyist_count
+				},
+				{
+					fillColor : "rgba(151,187,205,0.5)",
+					strokeColor : "rgba(151,187,205,1)",
+					data : lobbyist_amount
+				}
+			]
+
+		}
+
+	var LobbyistLine = new Chart(document.getElementById("lobbyist_graph").getContext("2d")).Bar(LobbyistChartData);
 });
 </script>
 {% endblock scripts %}
