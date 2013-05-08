@@ -120,6 +120,10 @@ def organization(request, entityid):
         url_issues = 'http://transparencydata.com/api/1.0/aggregates/org/%s/issues.json?apikey=%s' % (entityid, apikey)
         response_issues = urllib2.urlopen(url_issues)
         issues_breakdown = response_issues.read()
+        #top bills
+        url_bills = 'http://transparencydata.com/api/1.0/aggregates/org/%s/bills.json?apikey=%s' % (entityid, apikey)
+        response_bills = urllib2.urlopen(url_bills)
+        bills_breakdown = response_bills.read()
         processor = {
                      'recipients' : SafeString(recipients), 
                      'state_fed' : SafeString(state_breakdown), 
@@ -128,6 +132,7 @@ def organization(request, entityid):
                      'pac' : SafeString(pac_breakdown), 
                      'bio' : bio.strip(), 
                      'name' : name.upper(), 
+                     'bills' : SafeString(bills_breakdown),
                      'issues_breakdown' : SafeString(issues_breakdown), 
                      'photo' : photo
         }

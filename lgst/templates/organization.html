@@ -88,6 +88,18 @@
         </div>
     </div>
 </div>
+<div class="bills">
+    <div class="bills-wrapper">
+        <div class="bills-full">
+            <h1>{{ name }}'S TOP BILLS LOBBIED FOR</h1>
+        <div class="bills-list">
+            <ol class="list3">
+            </ol>
+            <br/>
+        </div>
+    </div>
+</div>
+</div>
 {% endblock content %}
 
 {% block scripts %}
@@ -101,6 +113,8 @@ $(document).ready(function() {
     var pac = {{ pac }};
     var lobbyist = {{ lobbyist }};
     var issues = {{ issues_breakdown }};
+    var bills = {{ bills }};
+    console.log(bills);
     var dems = parseInt(party.Democrats[0]);
     var other = parseInt(party.Other[0]);
     var repubs = parseInt(party.Republicans[0]);
@@ -179,6 +193,9 @@ $(document).ready(function() {
     
     for (var l=0; l < issues.length; l++) {
         $('.issue-list').append('<div class="i"><li>' + issues[l].issue.toUpperCase() + '</li></div>');
+    }
+    for (var m=0; m < bills.length; m++) {
+        $('.list3').append('<div class="b"><li>' + bills[m].title.toUpperCase() + '</li><p>Bill Number: ' + bills[m].cycle + '</p><p>Bill name: ' + bills[m].bill_name + '</p></div>');
     }
     var lobbyist_labels = new Array();
     var lobbyist_count = new Array();
