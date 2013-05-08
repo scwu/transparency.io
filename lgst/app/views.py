@@ -30,6 +30,19 @@ def get_results(request):
         req = url + data
         response = urllib2.urlopen(req)
         json = response.read()
+        if json == "[]":
+            print "reached here"
+            query2 = re.sub(r'[^a-zA-Z0-9 ]', '', text)
+            print query2
+            url2 = 'http://transparencydata.com/api/1.0/entities.json?'
+            values2 = {
+                'apikey' : '639590fa6001413492a034112c3a6494',
+                'search' : query2,
+            }
+            data2 = urllib.urlencode(values2)
+            req2 = url2 + data2
+            response2 = urllib2.urlopen(req2)
+            json = response2.read()
         return HttpResponse(json)
 
 def organization(request, entityid):
