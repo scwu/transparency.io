@@ -56,6 +56,13 @@ def organization(request, entityid):
         name = done['name']
         try:
             bio = done['metadata']['bio']
+            print bio
+            result = re.compile('<p>(.*)</p>', re.DOTALL ).search(bio)
+            try:
+                bio = result.group(1)
+            except:
+                print "no regex match"
+                pass
             photo = done['metadata']['photo_url']
         except:
             url_encode2 = re.sub(r'[^a-zA-Z0-9 ]', '', name)
@@ -82,11 +89,20 @@ def organization(request, entityid):
                 result = re.compile('}}(.*)==History==', re.DOTALL).search(content)
                 try:
                     bio = result.group(1)
-                    print bio
+                    result2 = re.compile('<p>(.*)<\/p>', re.DOTALL).search(bio)
+                    try:
+                        bio = result2.group(1)
+                    except:
+                        pass
                 except:
                     try:
                         bio = content.split("==History==",1)[0]
-                        print bio
+                        result2 = re.compile('<p>(.*)<\/p>', re.DOTALL).search(bio)
+                        print result2
+                        try:
+                            bio = result2.group(1)
+                        except:
+                            pass
                     except: 
                         bio = None
             else:
@@ -103,4 +119,4 @@ def organization(request, entityid):
         response_state = urllib2.urlopen(url_state)
         state_breakdown = response_state.read()
         print state_breakdown
-        return render_to_response('organization.html', {'recipients' : SafeString(recipients), 'state_fed' : SafeString(state_breakdown), 'party_breakdown' : SafeString(breakdown), 'bio' : bio, 'name' : name, 'photo' : photo}) 
+        return render_to_response('organization.html', {'recipients' : SafeString(recipients), 'state_fed' : SafeString(state_breakdown), 'party_breakdown' : SafeString(breakdown), 'bio' : bio.strip(), 'name' : name.upper(), 'photo' : photo}) 

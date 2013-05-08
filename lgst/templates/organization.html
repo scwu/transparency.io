@@ -5,24 +5,51 @@
 {% endblock styles %}
 
 {% block content %}
-<div class="full">
-	 <img alt="full screen background image" src="images/wics.jpg" id="full-screen-background-image" /> 
-    <div id="nav">
-        <a href="/" class ="home">RETURN</a>
-        <h1 class="organization">{{ name }}</h1>
+<div class="company-info">
+    <div class="back-button">
+        <a href="/" class="back">BACK</a>
     </div>
+    <div class="grouped-company">
 	 <div class="title">
-	   <p> {{ bio }} </p>
-         <p> {{ photo }}</p>
-	 </div>
+         <h1 class="company-title">{{ name }}</h1>
+         {% if photo != None %}
+            <img src=" {{ photo }} " class="company-logo"/>
+         {% endif %}
+     </div>
+        <div class="description">
+            <p class="description"> {{ bio }} </p>
+        </div>
+    </div>
 </div>
-<div class="party">
+<div class="party-info">
+    <div class="party-wrapper">
+    <canvas id="party" height="500" width="500"></canvas>
+    <div class="statistic-party">
+        <h1>{{ name }}'S POLITICAL PARTY CONTRIBUTIONS</h1>
+        <div class="numbers-party">
+            <div class="dems">
+            </div>
+            <div class="repubs">
+            </div>
+            <div class="others">
+            </div>
+        </div>
+    </div>
+    </div>
 </div>
-<div class="recipients">
-</div>
-<div class="state_fed">
-</div>
-<div class="lobbying">
+<div class="federal-info">
+    <div class="federal-wrapper">
+    <div class="federal-state">
+        <h1>{{ name }}'S CONTRIBUTIONS TOWARDS FEDERAL AND STATE ELECTIONS</h1>
+        <div class="federal-numbers">
+            <div class="feds">
+            </div>
+            <div class="state">
+            </div>
+        </div>
+    </div>
+    <canvas id="federal" height="500" width="500"></canvas>
+    </div>
 </div>
 {% endblock content %}
 
@@ -30,8 +57,48 @@
 {{ block.super}}
     <script src="/media/js/chart.min.js"></script>
 <script>
+$(document).ready(function() { 
     var recipients = {{ recipients }} ;
     var state_fed = {{ state_fed }} ;
     var party = {{ party_breakdown }} ;
+    console.log(state_fed);
+    var dems = parseInt(party.Democrats[0]);
+    var other = parseInt(party.Other[0]);
+    var repubs = parseInt(party.Republicans[0]);
+    var federal = parseInt(state_fed.Federal[0]);
+    var state = parseInt(state_fed.State[0]);
+    var partyData = [
+        { 
+            value: dems,
+            color: "#0171d0"
+        },
+        { 
+            value: other,
+            color: "#A600A6"
+        }, 
+        { 
+            value: repubs,
+            color: "#E0004F"
+        }
+    ];
+    
+    var statefedData = [
+        {
+            value: federal,
+            color:"#77BED2"
+        },
+        {
+            value: state,
+            color: "#F2583E"
+        },
+    ];
+    var party_graph = new Chart(document.getElementById("party").getContext("2d")).Pie(partyData);
+    $('.dems').append('<h2>Contributions to the Democrat Party</h2><p>Number of contributors: ' + dems + '</p><p>Amount contributed: $' + party.Democrats[1] + '</p>');
+     $('.repubs').append('<h2>Contributions to the Republican Party</h2><p>Number of contributors: ' + repubs + '</p><p>Amount contributed: $' + party.Republicans[1] + '</p>');
+    $('.others').append('<h2>Contributions to Independent Parties</h2><p>Number of contributors: ' + other + '</p><p>Amount contributed: $' + party.Other[1] + '</p>');
+    var federal_graph = new Chart(document.getElementById("federal").getContext("2d")).Pie(statefedData);
+    $('.state').append('<h2>Contributions to State Elections</h2><p>Number of contributors: ' + state + '</p><p>Amount contributed: $' + state_fed.State[1] + '</p>');
+    $('.feds').append('<h2>Contributions to Federal Elections</h2><p>Number of contributors: ' + federal + '</p><p>Amount contributed: $' + state_fed.Federal[1] + '</p>');
+});
 </script>
 {% endblock scripts %}

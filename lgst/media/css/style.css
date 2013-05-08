@@ -1,11 +1,13 @@
 html {
   margin: 0;
   padding: 0;
-    min-height: 100%;
+  height: 100%;
   position: relative;
 }
 body {
-  min-height: 650px;
+  height: 100%;
+    margin: 0;
+    padding: 0;
 }
 .home-page {
   position: absolute;
@@ -21,7 +23,8 @@ body {
   background-size: cover;
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
-  min-height: 100%;
+  min-height: 650px;
+    height: 100%;
 }
 
 .home-page .search-bar {
@@ -73,7 +76,7 @@ textarea:focus, input:focus {
 
 #lightbox {
 	position: absolute;
-	top: -0px;
+	top: 0px;
 	left: 50%;
 	width: 500px;
     max-height: 400px;
@@ -94,6 +97,7 @@ textarea:focus, input:focus {
 	left: 0;
 	width: 100%;
 	height: 100%;
+    min-height: 650px;
 	background: #000;
 	filter: alpha(opacity=75);
 	-moz-opacity: 0.75;
@@ -135,4 +139,150 @@ div#dark {
 a.company-link {
     text-decoration:none;
     color: black;
+}
+
+div.company-info {
+    padding: -20px -20px 0px 20px;
+    position: relative;
+    min-height: 600px;
+    height:100%;
+    width: 100%;
+    min-width: 1350px;
+    background-color:#fc5866;
+}
+
+.grouped-company {
+    position: absolute;
+    width: 900px;
+    top: 23%;
+    left: 20%;
+}
+.grouped-company .title {
+    float: left;
+    width: 250px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    color: #fafafa;
+    word-wrap: break-word;
+}
+
+.grouped-company .description {
+    font-family: 'Open Sans', sans-serif;
+    width: 600px;
+    max-height: 370px;
+    overflow-y: auto;
+    font-weight: 400;
+    color: #fafafa;
+    float:right;
+}
+.back-button {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-style:italic;
+    padding: 10px 10px 10px 10px;
+}
+
+.back-button a{
+    text-decoration:none;
+    color: #fafafa;
+}
+
+.description p {
+    text-align: center;
+}
+
+.party-info {
+    position: relative;
+    background-color: #56b3d8;
+    width: 100%;
+    min-width: 1350px;
+    height: 650px;
+}
+
+.party-wrapper {
+    position: absolute;
+    width: 1200px;
+    top: 12%;
+    left: 9%;
+}
+.party-info canvas {
+    float: left;
+}
+
+.statistic-party {
+    display:inline-block;
+    float: right;
+    width: 600px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    color: #fafafa;
+    margin-top: 15px;
+}
+
+.numbers-party .dems h2 {
+    color: #0171d0;   
+}
+
+.numbers-party .repubs h2 {
+    color: #E0004F;
+}
+.numbers-party p {
+    padding-left: 30px;
+    font-weight: 300;
+    color: #fafafa;
+    line-height: 10px;
+}
+
+.numbers-party .others h2 {
+    color: #A600A6;   
+}
+
+.federal-info {
+    background-color: #D5E1DD;
+    position: relative;
+    width: 100%;
+    min-width: 1350px;
+    height: 650px;
+}
+
+.federal-wrapper {
+    position: absolute;
+    width: 1100px;
+    top: 12%;
+    left: 9%;
+}
+
+.federal-wrapper canvas {
+    float: right;
+}
+
+.federal-state {
+    display:inline-block;
+    float: left;
+    width: 600px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    color: #fafafa;
+    margin-top: 15px;
+}
+.federal-state h1 {
+    width: 500px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    color: #fafafa;
+    width: 500px;
+}
+
+.federal-numbers .feds h2 {
+    color: #77BED2;   
+}
+
+.federal-numbers .state h2 {
+    color: #F2583E;
+}
+.federal-numbers p {
+    padding-left: 30px;
+    font-weight: 300;
+    color: #fafafa;
+    line-height: 10px;
 }
