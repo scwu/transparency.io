@@ -292,6 +292,7 @@ div.company-info {
     width: 100%;
     min-width: 1350px;
     top: -22px;
+    min-height: 800px;
 }
 
 .recipient-full h1 {
@@ -330,5 +331,45 @@ div.company-info {
     padding-bottom: 20px;
 }
 .recipient-list {
+    text-align: center;
+}
+.pac {
+    background-color: #f2583e;
+    position: relative;
+    width: 100%;
+    min-width: 1350px;
+    top: -44px;
+    min-height: 800px;
+}
+
+.pacs-full h1 {
+    text-align:center;
+    padding-top: 2em;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    color: #fafafa;
+}
+.p li {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    font-size: 25px;
+    color: #fafafa;
+}
+.p p{
+   font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    line-height: 10px;
+    color: #fafafa;
+}
+
+.p {
+    width: 350px;
+    display: inline-block;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.pac-list {
     text-align: center;
 }

@@ -54,9 +54,21 @@
 <div class="recipients">
     <div class="recipient-wrapper">
     <div class="recipient-full">
-    <h1>{{ name }}'S TOP CONTRIBUTION RECIPIENTS</h1>
+    <h1>{{ name }}'S TOP INDIVIDUAL CONTRIBUTION RECIPIENTS</h1>
         <div class="recipient-list">
             <ol class="list1">
+            </ol>
+            <br/>
+        </div>
+    </div>
+    </div>
+</div>
+<div class="pac">
+    <div class="pac-wrapper">
+        <div class="pacs-full">
+            <h1>{{ name }}'S TOP PAC CONTRIBUTION RECIPIENTS</h1>
+        <div class="pac-list">
+            <ol class="list2">
             </ol>
             <br/>
         </div>
@@ -73,6 +85,8 @@ $(document).ready(function() {
     var recipients = {{ recipients }} ;
     var state_fed = {{ state_fed }} ;
     var party = {{ party_breakdown }} ;
+    var pac = {{ pac }};
+    console.log(pac);
     var dems = parseInt(party.Democrats[0]);
     var other = parseInt(party.Other[0]);
     var repubs = parseInt(party.Republicans[0]);
@@ -85,16 +99,16 @@ $(document).ready(function() {
         var id = id;
         if (recip.party === "R") {
             if (recip.state === "") {
-                $(place).append('<div class="r ' + id + '" id="red"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: ' + recip.total_amount + '</p><p>Type of Contribution: Federal</p></div>');
+                $(place).append('<div class="r ' + id + '" id="red"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: $' + recip.total_amount + '</p><p>Type of Contribution: Federal</p></div>');
             } else {
-                $(place).append('<div class="r ' + id + '" id="red"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: ' + recip.total_amount + '</p><p>Type of Contribution: State (' + recip.state + ')</p></div>');
+                $(place).append('<div class="r ' + id + '" id="red"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: $' + recip.total_amount + '</p><p>Type of Contribution: State (' + recip.state + ')</p></div>');
             }
         }
         else if (recip.party === "D") {
             if (recip.state === "") {
-            $(place).append('<div class="r ' + id + '" id="blue"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: ' + recip.total_amount + '</p><p>Type of Contribution: Federal</p></div>');
+            $(place).append('<div class="r ' + id + '" id="blue"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: $' + recip.total_amount + '</p><p>Type of Contribution: Federal</p></div>');
             } else {
-                 $(place).append('<div class="r ' + id +'" id="blue"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: ' + recip.total_amount + '</p><p>Type of Contribution: State (' + recip.state + ')</p></div>');
+                 $(place).append('<div class="r ' + id +'" id="blue"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: $' + recip.total_amount + '</p><p>Type of Contribution: State (' + recip.state + ')</p></div>');
             }
         }
         else {
@@ -144,6 +158,9 @@ $(document).ready(function() {
         } else {
             append_appr(recipients[i], '.list1', 'second');
         }
+    }
+    for (var j=0; j < pac.length; j++) {
+        $('.list2').append('<div class="p"><li>' + pac[j].name.toUpperCase() + '</li><p>Number of contributors: ' + pac[j].employee_count + '</p><p>Total amount contributed: $' + pac[j].total_amount + '</p></div>');
     }
 });
 </script>

@@ -108,4 +108,7 @@ def organization(request, entityid):
         url_state = 'http://transparencydata.com/api/1.0/aggregates/org/%s/recipients/level_breakdown.json?apikey=%s' % (entityid, apikey)
         response_state = urllib2.urlopen(url_state)
         state_breakdown = response_state.read()
-        return render_to_response('organization.html', {'recipients' : SafeString(recipients), 'state_fed' : SafeString(state_breakdown), 'party_breakdown' : SafeString(breakdown), 'bio' : bio.strip(), 'name' : name.upper(), 'photo' : photo}) 
+        url_pac = 'http://transparencydata.com/api/1.0/aggregates/org/%s/recipient_pacs.json?apikey=%s' % (entityid, apikey)
+        response_pac = urllib2.urlopen(url_pac)
+        pac_breakdown = response_pac.read()
+        return render_to_response('organization.html', {'recipients' : SafeString(recipients), 'state_fed' : SafeString(state_breakdown), 'party_breakdown' : SafeString(breakdown), 'pac' : SafeString(pac_breakdown), 'bio' : bio.strip(), 'name' : name.upper(), 'photo' : photo}) 
