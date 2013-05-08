@@ -108,4 +108,32 @@ def organization(request, entityid):
         url_state = 'http://transparencydata.com/api/1.0/aggregates/org/%s/recipients/level_breakdown.json?apikey=%s' % (entityid, apikey)
         response_state = urllib2.urlopen(url_state)
         state_breakdown = response_state.read()
-        return render_to_response('organization.html', {'recipients' : SafeString(recipients), 'state_fed' : SafeString(state_breakdown), 'party_breakdown' : SafeString(breakdown), 'bio' : bio.strip(), 'name' : name.upper(), 'photo' : photo}) 
+        #get pac breakdown
+        url_pac = 'http://transparencydata.com/api/1.0/aggregates/org/%s/recipient_pacs.json?apikey=%s' % (entityid, apikey)
+        response_pac = urllib2.urlopen(url_pac)
+        pac_breakdown = response_pac.read()
+        #get top lobbyists
+        url_lobbying = 'http://transparencydata.com/api/1.0/aggregates/org/%s/registrants.json?apikey=%s' % (entityid, apikey)
+        response_lobbyist = urllib2.urlopen(url_lobbying)
+        lobbyist_breakdown = response_lobbyist.read()
+        #get top issues
+        url_issues = 'http://transparencydata.com/api/1.0/aggregates/org/%s/issues.json?apikey=%s' % (entityid, apikey)
+        response_issues = urllib2.urlopen(url_issues)
+        issues_breakdown = response_issues.read()
+        #top bills
+        url_bills = 'http://transparencydata.com/api/1.0/aggregates/org/%s/bills.json?apikey=%s' % (entityid, apikey)
+        response_bills = urllib2.urlopen(url_bills)
+        bills_breakdown = response_bills.read()
+        processor = {
+                     'recipients' : SafeString(recipients),
+                     'state_fed' : SafeString(state_breakdown),
+                     'party_breakdown' : SafeString(breakdown),
+                     'lobbyist' : SafeString(lobbyist_breakdown),
+                     'pac' : SafeString(pac_breakdown),
+                     'bio' : bio.strip(),
+                     'name' : name.upper(),
+                     'bills' : SafeString(bills_breakdown),
+                     'issues_breakdown' : SafeString(issues_breakdown),
+                     'photo' : photo
+        }
+        return render_to_response('organization.html', processor)
