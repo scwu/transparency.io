@@ -2,6 +2,7 @@
 #HP comments or code inserted by the HackPack team will (usually) include #HP
 
 import sys, os #HP
+import dj_database_url
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -176,3 +177,6 @@ LOGGING = {
         },
     }
 }
+
+DATABASES['default'] =  dj_database_url.config()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
