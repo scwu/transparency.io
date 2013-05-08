@@ -51,6 +51,18 @@
     <canvas id="federal" height="500" width="500"></canvas>
     </div>
 </div>
+<div class="recipients">
+    <div class="recipient-wrapper">
+    <div class="recipient-full">
+    <h1>{{ name }}'S TOP CONTRIBUTION RECIPIENTS</h1>
+        <div class="recipient-list">
+            <ol class="list1">
+            </ol>
+            <br/>
+        </div>
+    </div>
+</div>
+</div>
 {% endblock content %}
 
 {% block scripts %}
@@ -61,12 +73,41 @@ $(document).ready(function() {
     var recipients = {{ recipients }} ;
     var state_fed = {{ state_fed }} ;
     var party = {{ party_breakdown }} ;
-    console.log(state_fed);
+    console.log(recipients);
     var dems = parseInt(party.Democrats[0]);
     var other = parseInt(party.Other[0]);
     var repubs = parseInt(party.Republicans[0]);
     var federal = parseInt(state_fed.Federal[0]);
     var state = parseInt(state_fed.State[0]);
+    
+    function append_appr(recip, place, id) {
+        var recip = recip;
+        var place = place;
+        var id = id;
+        console.log(recip);
+        if (recip.party === "R") {
+            if (recip.state === "") {
+                $(place).append('<div class="r ' + id + '" id="red"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: ' + recip.total_amount + '</p><p>Type of Contribution: Federal</p></div>');
+            } else {
+                $(place).append('<div class="r ' + id + '" id="red"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: ' + recip.total_amount + '</p><p>Type of Contribution: State (' + recip.state + ')</p></div>');
+            }
+        }
+        else if (recip.party === "D") {
+            if (recip.state === "") {
+            $(place).append('<div class="r ' + id + '" id="blue"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: ' + recip.total_amount + '</p><p>Type of Contribution: Federal</p></div>');
+            } else {
+                 $(place).append('<div class="r ' + id +'" id="blue"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: ' + recip.total_amount + '</p><p>Type of Contribution: State (' + recip.state + ')</p></div>');
+            }
+        }
+        else {
+            if (recip.state === "") {
+            $(place).append('<div class="r ' + id + '" id="purple"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: ' + recip.total_amount + '</p><p>Type of Contribution: Federal</p></div>');
+            } else {
+                 $(place).append('<div class="r ' + id + '" id="purple"><li>' + recip.name.toUpperCase() + '</li><p>Number of contributors: ' + recip.employee_count + '</p><p>Total amount contributed: ' + recip.total_amount + '</p><p>Type of Contribution: State (' + recip.state + ')</p></div>');
+            }
+        }
+    }
+    
     var partyData = [
         { 
             value: dems,
@@ -99,6 +140,13 @@ $(document).ready(function() {
     var federal_graph = new Chart(document.getElementById("federal").getContext("2d")).Pie(statefedData);
     $('.state').append('<h2>Contributions to State Elections</h2><p>Number of contributors: ' + state + '</p><p>Amount contributed: $' + state_fed.State[1] + '</p>');
     $('.feds').append('<h2>Contributions to Federal Elections</h2><p>Number of contributors: ' + federal + '</p><p>Amount contributed: $' + state_fed.Federal[1] + '</p>');
+    for (var i = 0; i < recipients.length; i++) {
+        if (i < recipients.length/2) {
+            append_appr(recipients[i], '.list1', 'first');
+        } else {
+            append_appr(recipients[i], '.list1', 'second');
+        }
+    }
 });
 </script>
 {% endblock scripts %}

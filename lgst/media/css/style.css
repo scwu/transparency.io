@@ -286,3 +286,46 @@ div.company-info {
     color: #fafafa;
     line-height: 10px;
 }
+.recipients {
+    background-color: #21d3a7;
+    position: relative;
+    width: 100%;
+    min-width: 1350px;
+    top: -22px;
+}
+
+.recipient-full h1 {
+    text-align:center;
+    padding-top: 2em;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    color: #fafafa;
+}
+.r li {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    font-size: 25px;
+}
+.r p{
+   font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    line-height: 10px;
+}
+#red {
+    color:#f45d69; 
+}
+#blue {
+    color: #4797d8;
+}
+
+.r {
+    width: 400px;
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.recipient-list {
+    text-align: center;
+}
