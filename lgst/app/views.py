@@ -9,6 +9,11 @@ import settings, urls
 import csv
 import urllib
 import urllib2
+import json
+import re
+
+from app.wikipedia import Wikipedia, WikipediaError
+from app.wiki2plain import Wiki2Plain
 
 def index(request):
     return render_to_response('index.html')
@@ -32,8 +37,48 @@ def organization(request, entityid):
     if request.method=='GET':
         apikey = '639590fa6001413492a034112c3a6494'
         general = 'http://transparencydata.com/api/1.0/entities/%s.json?apikey=%s' % (entityid, apikey)
-        response_g = urllib2.urlopen(url)
-        general_total = response.read()
+        response_g = urllib2.urlopen(general)
+        general_total = response_g.read()
+        done = json.loads(general_total)
+        name = done['name']
+        try:
+            bio = done['metadata']['bio']
+            photo = done['metadata']['photo_url']
+        except:
+            url_encode2 = re.sub(r'[^a-zA-Z0-9 ]', '', name)
+            print url_encode2
+            final_str = ' '.join(url_encode2.split())
+            print final_str
+            url_encode = final_str.replace(" ", "+")
+            print url_encode
+            wiki_search = "http://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch=%s&srlimit=1" % (url_encode)
+            results = urllib2.urlopen(wiki_search)
+            results_dict = json.loads(results.read())
+            print results_dict
+            title = results_dict['query']['search'][0]['title']
+            print title
+            lang = 'en'
+            wiki_p = Wikipedia(lang)
+            try:
+                raw = wiki_p.article(title)
+            except:
+                raw = None
+            if raw:
+                wiki2plain = Wiki2Plain(raw)
+                content = str(wiki2plain.text)
+                result = re.compile('}}(.*)==History==', re.DOTALL).search(content)
+                try:
+                    bio = result.group(1)
+                    print bio
+                except:
+                    try:
+                        bio = content.split("==History==",1)[0]
+                        print bio
+                    except: 
+                        bio = None
+            else:
+                bio = None
+            photo = None
         url = 'http://transparencydata.com/api/1.0/aggregates/org/%s/recipients.json?apikey=%s' % (entityid, apikey)
         response = urllib2.urlopen(url)
         recipients = response.read()
@@ -45,4 +90,4 @@ def organization(request, entityid):
         response_state = urllib2.urlopen(url_state)
         state_breakdown = response_state.read()
         print state_breakdown
-        return render_to_response('organization.html', {'recipients' : SafeString(recipients), 'state_fed' : SafeString(state_breakdown), 'party_breakdown' : SafeString(breakdown)}) 
+        return render_to_response('organization.html', {'recipients' : SafeString(recipients), 'state_fed' : SafeString(state_breakdown), 'party_breakdown' : SafeString(breakdown), 'bio' : bio, 'name' : name, 'photo' : photo}) 
